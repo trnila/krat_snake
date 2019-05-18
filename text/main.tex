@@ -78,16 +78,16 @@ Program lze ukončit stisknutím \textsc{CTRL+A} následovaný klávesou \textsc
 
 \subsection{Knihovna Mbed 2}
 Knihovna Mbed 2 má k dispozici několik tříd pro snadné použití periférií.
-Hlavíčkové soubory tříd jsou k dispozici v adresáři projektu \texttt{mbed/drivers} nebo online\footnote{\url{https://os.mbed.com/users/mbed_official/code/mbed/file/65be27845400/drivers/}}.
+Hlavičkové soubory tříd jsou k dispozici v adresáři projektu \texttt{mbed/drivers} nebo online\footnote{\url{https://os.mbed.com/users/mbed_official/code/mbed/file/65be27845400/drivers/}}.
 K dispozici je i dokumentace s ukázkami \url{https://os.mbed.com/handbook/Homepage}.
 Detailnější informace lze nalézt v dokumentu \url{http://poli.cs.vsb.cz/edu/apps/lab/apps-labexc.pdf}.
 
 \section{Vykreslení čtverce na LCD displeji}
-LCD displej je k mikrokontroléru připojen pomocí SPI rozhrání, a posílame příkazy nebo jednotlivé pixely do paměti řadiče displeje.
+LCD displej je k mikrokontroléru připojen pomocí SPI rozhraní, a posíláme příkazy nebo jednotlivé pixely do paměti řadiče displeje.
 Základní komunikace s displejem je naimplementovaná v knihovně \texttt{lcd\_lib.cpp}.
 Dostupné funkce lze nalézt v hlavičkovém souboru \texttt{lcd\_lib.h}.
 
-Had se bude pohybovat po políčkach o velikosti například $4\times4$ pixelů.
+Had se bude pohybovat po políčkách o velikosti například $4\times4$ pixelů.
 Proto prvním úkolem bude vytvořit funkci, která konkrétní políčko vyplní nějakou barvou.
 Prototyp takové funkce by mohl být například:
 \begin{minted}{c}
@@ -148,8 +148,8 @@ typedef struct {int x, y; } Vector2;
 \end{minted}
 
 Had se posunuje tak, že ocas se posune na článek před ocasem, článek před ocasem se posune na třetí článek od konce atd.
-Hlava se pak posune na nové a prázné políčko.
-Protože jsou všechny články hada stejné, tak nemusíme nic přesouvat, ale stačí zrušit akuální ocas a přidat novou hlavu o poličko dopředu v aktuálním směru.
+Hlava se pak posune na nové a prázdné políčko.
+Protože jsou všechny články hada stejné, tak nemusíme nic přesouvat, ale stačí zrušit aktuální ocas a přidat novou hlavu o poličko dopředu v aktuálním směru.
 Tato struktura připomíná frontu, ale my si jej naimplementujeme pomocí pole.
 Pro zjednodušení využijeme \mintinline{c++}{std::vector}, do kterého budeme ukládat souřadnice datového typu \mintinline{c++}{Vector2}.
 
@@ -167,7 +167,7 @@ Hada budeme ovládat pomocí čtyř tlačítek.
 Stav tlačítka zjistíme přečtením hodnoty na pinu.
 Schéma zapojení můžeme vidět na obrázku~\ref{fig:button}.
 V normálním stavu je tlačítko rozpojeno a tak na pinu vidíme logickou jedničku.
-Pokud se tlačitko sepne, tak na pinu uvidíme logickou nulu.
+Pokud se tlačítko sepne, tak na pinu uvidíme logickou nulu.
 
 \begin{figure}[ht]
 \centering
@@ -198,7 +198,7 @@ Ve funkci můžeme přečíst stavy všech tlačítek, jako jsme to dělali dopo
 V hlavní smyčce programu můžeme z uložené klávesy změnit směr hada a třeba přidat podmínky, aby se nemohl otočit čelem vzad.
 
 \section{Generování jablek a růst hada}
-Náhodně vygenerujem souřadnice jablka, uložíme do globalní proměnné a vykreslíme.
+Náhodně vygenerujeme souřadnice jablka, uložíme do globální proměnné a vykreslíme.
 Pokud se hlava hada dostane na souřadnici jablka tak, nebudeme odstraňovat ocas hada.
 Tím se had prodlouží o jeden článek.
 Po sežrání se může zvýšit čítač skóre.
@@ -209,7 +209,7 @@ Po dosažení určité hodnoty vygenerujeme jablko na nové pozici.
 Bylo by také vhodné ošetřit, aby se jablko nevygenerovalo na hadovi.
 
 \section{Ovládání hada pomocí akcelerometru}
-Hada můžeme alternativně ovládat pomocí náklápění.
+Hada můžeme alternativně ovládat pomocí naklápění.
 Vývojová deska obsahuje senzor s akcelerometrem, který vrací zrychlení ve všech třech osách.
 Senzor je připojen k mikrokontroléru pomocí sběrnice \twi{} a využívá adresu \texttt{FXOS8700CQ\_SLAVE\_ADDR1}.
 Sensor je při resetu vypnutý, aby šetřil energii.
@@ -226,7 +226,7 @@ motion_data_units_t acc_data;
 acc.getAxis(acc_data);
 printf("%f %f %f\r\n", acc_data.x, acc_data.y, acc_data.z);
 \end{minted}
-Ve vodorovné poloze získáme hodnoty přibližně $ x = 0$, $y = 0$ a $z = 9,81 $.
+Ve vodorovné poloze získáme hodnoty přibližně $ x = 0$, $y = 0$ a $z = 1 $.
 Orientaci os lze vidět na obrázku~\ref{fig:axes}.
 
 \begin{figure}[ht]
@@ -249,7 +249,7 @@ Lze implementovat podobně jako v předchozím bodě.
 
 \section{Hlavní menu a konec hry}
 Pro vypisování textu na displej jsou připravené tři funkce.
-Souřadnice \texttt{x}, \texttt{y} udává konkrétní pixel displeje a nijak nesouvisi s políčky hada.
+Souřadnice \texttt{x}, \texttt{y} udává konkrétní pixel displeje a nijak nesouvisí s políčky hada.
 Písmo textu je proporcionální, což znamená, že každé písmeno zabírá stejnou šířku a zjednodušují se nám výpočty, např. při centrování textu na střed displeje.
 Parametr \texttt{scale} udává kolik pixelů na šířku/výšku zabere jeden bod písma.
 Rozumné hodnoty jsou od 1 do 3.
@@ -273,8 +273,8 @@ Na konci hry se může například vykreslit \textit{Game over} a skóre s počt
 \section{Vykreslení obrázku}
 Formáty jako PNG či JPEG ukládaji obrázek v komprimované podobě a bylo by potřeba další knihovny.
 Proto může být vhodné připravit obrázek v 16bit formátu 5:6:5.
-K mikrokontroléru nemáme připojenou žádnou pamětovou kartu a proto musíme obrázek umístit přímo do programu.
-Následujícimi příkazy můžeme z obrázku \texttt{input.jpg} vygenerovat hlavíčkový soubor \texttt{logo.h}:
+K mikrokontroléru nemáme připojenou žádnou paměťovou kartu a proto musíme obrázek umístit přímo do programu.
+Následujícími příkazy můžeme z obrázku \texttt{input.jpg} vygenerovat hlavičkový soubor \texttt{logo.h}:
 \begin{minted}{shell-session}
 # změna velikosti obrázku na 64x64
 $ convert input.jpg -resize 64x64 resized.bmp
@@ -294,7 +294,7 @@ $ echo "const int raw_rgb565_height = $height;" >> logo.h
 \end{minted}
 
 Ve vygenerovaném souboru je proměnná \texttt{raw\_rgb565}.
-Pro vykreslení stačí pole projít po 16 bitech (přetypujem na \mintinline{c++}{uint16_t}) a postupně vykreslit po řádcích.
+Pro vykreslení stačí pole projít po 16 bitech (přetypujeme na \mintinline{c++}{uint16_t}) a postupně vykreslit po řádcích.
 
 \section{Ovládání hada z počítače}
 Hada můžeme ovládat z počítače pomocí klávesnice.
