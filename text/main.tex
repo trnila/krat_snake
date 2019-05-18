@@ -41,20 +41,20 @@ Na vývojové desce je k dispozici akcelerometr, a proto budeme na závěr imple
 
 \section{Zprovoznění vývojového prostředí}
 \subsection{Stáhnutí projektu}
-Na webu \url{https://homel.vsb.cz/~trn0038/snake/snake.tar.gz} je k dispozici připravený projekt s LCD knihovnou a knihovnou pro akcelerometr.
+Na adrese \url{http://linedu.vsb.cz/~trn0038/snake/thesnake.tar.gz} je k dispozici připravený projekt s LCD knihovnou a knihovnou pro akcelerometr.
 Knihovnu si stáhneme a někam rozbalíme.
 
 Stáhnutí a rozbalení také můžeme provést i v terminálu:
 \begin{minted}{shell-session}
-$ wget https://homel.vsb.cz/~trn0038/snake/snake.tar.gz
-$ tar -xf snake.tar.gz
-$ cd snake 
+$ wget http://linedu.vsb.cz/~trn0038/snake/thesnake.tar.gz
+$ tar -xf thesnake.tar.gz
+$ cd thesnake 
 \end{minted}
 
 Alternativně si můžeme stáhnout projekt z Gitu:
 \begin{minted}{shell-session}
-$ git clone https://homel.vsb.cz/~trn0038/snake/snake.git
-$ cd snake
+$ git clone http://linedu.vsb.cz/~trn0038/snake/thesnake.git
+$ cd thesnake
 \end{minted}
 
 \subsection{Import projektu do MCUXpresso}
@@ -93,6 +93,7 @@ Prototyp takové funkce by mohl být například:
 \begin{minted}{c}
 void fill_rect(int x, int y, uint16_t color);
 \end{minted}
+Vykreslení čtverce budeme provádět po pixelech pomocí funkce \mintinline{c++}{void LCD_put_pixel(int x, int y, int color)}.
 
 Displej si ukládá barvy v 16bitovém formátu 5:6:5 (R, G, B), kde jednotlivá čísla značí kolik bitů využívá daná barva.
 V tomto případě tedy červená chce 5 bitů, zelená 6 bitu a modrá 5 bitů.
@@ -170,7 +171,7 @@ Pokud se tlačitko sepne, tak na pinu uvidíme logickou nulu.
 
 \begin{figure}[ht]
 \centering
-\includegraphics{figures/button}
+  \includegraphics[width=4cm]{figures/button}
 \caption{Schéma zapojení tlačítka}
  \label{fig:button}
 \end{figure}
@@ -230,7 +231,7 @@ Orientaci os lze vidět na obrázku~\ref{fig:axes}.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=5cm]{figures/axis}
+  \includegraphics[width=7cm]{figures/axis}
   \caption[]{Orientace os akcelerometru na vývojové desce\footnotemark}
   \label{fig:axes}
 \end{figure}
