@@ -1,0 +1,19 @@
+---
+- hosts: EB430
+  become: true
+  tasks:
+    - name: install required packages
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python3-serial
+        - python3-pygame
+
+    - name: add student to dialup group for access to /dev/tty(ACM|USB)
+      user:
+        name: student
+        groups: 
+          - dialout
+        append: true 
+
