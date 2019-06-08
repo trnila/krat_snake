@@ -8,7 +8,15 @@
         state: present
       with_items:
         - python3-serial
-        - python3-pygame
+        - python3-pip
+#        - python3-pygame
+        - xxd
+        - imagemagick
+
+    - name: install pygame
+      pip:
+        name: pygame
+        executable: pip3
 
     - name: add student to dialup group for access to /dev/tty(ACM|USB)
       user:
